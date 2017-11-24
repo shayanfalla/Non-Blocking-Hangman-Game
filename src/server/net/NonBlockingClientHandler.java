@@ -25,14 +25,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ClientHandler {
+public class NonBlockingClientHandler {
 
     private final ServerSocketChannel serverSocketChannel;
     private final Selector selector;
     private final HashMap clients;
     private final Controller control;
 
-    public ClientHandler(ServerSocketChannel serverSocketChannel, Selector selector) {
+    public NonBlockingClientHandler(ServerSocketChannel serverSocketChannel, Selector selector) {
         this.serverSocketChannel = serverSocketChannel;
         this.selector = selector;
         this.clients = new HashMap();

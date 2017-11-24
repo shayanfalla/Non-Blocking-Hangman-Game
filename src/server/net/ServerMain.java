@@ -41,7 +41,7 @@ public class ServerMain {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ClientHandler ch = new ClientHandler(serverSocketChannel, selector);
+        NonBlockingClientHandler ch = new NonBlockingClientHandler(serverSocketChannel, selector);
         ch.processConnections();
     }
 }
