@@ -96,7 +96,7 @@ public class NonBlockingClientHandler {
             //Remove client game session when connection is terminated
             clients.remove(socketChannel.getRemoteAddress());
             key.cancel();
-            System.out.println("\nCcnnection with " + socket + " has been terminated.\n");
+            System.out.println("Connection with " + socket + " has been terminated.\n");
             closeSocket(socket);
         } else {
             readMessage(buffer, socketChannel);
