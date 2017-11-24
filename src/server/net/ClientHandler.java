@@ -24,8 +24,6 @@ import java.nio.channels.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ClientHandler {
 
@@ -85,9 +83,6 @@ public class ClientHandler {
         //Initializing the gamesession
         //and storing it
         control.initHangman(socketChannel, socket, clients);
-        /*HangmanHandler handler = new HangmanHandler(socketChannel, socket);
-        handler.run("whatever");
-        clients.put(socketChannel.getRemoteAddress(), handler);*/
 
     }
 
@@ -126,12 +121,5 @@ public class ClientHandler {
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
         control.contHangman(new String(bytes), clients, socketChannel);
-       /* try {
-            HangmanHandler handler = (HangmanHandler) clients.get(socketChannel.getRemoteAddress());
-            handler.run(new String(bytes));
-            clients.put(socketChannel.getRemoteAddress(), handler);
-        } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
 }
