@@ -55,8 +55,8 @@ public class NonBlockingClient {
             SelectionKey key = (SelectionKey) iterator.next();
             iterator.remove();
             if (key.isReadable()) {
-                String msg = processRead(key);
-                System.out.println(msg);
+                DisplayThread dt = new DisplayThread(key);
+                dt.start();
             }
         }
     }
@@ -77,8 +77,6 @@ public class NonBlockingClient {
             if (key.isReadable()) {
                 DisplayThread dt = new DisplayThread(key);
                 dt.start();
-               // String msg = processRead(key);
-               // System.out.println(msg);
             }
             if (key.isWritable()) {
                 String msg = userInputReader.readLine();
@@ -102,16 +100,5 @@ public class NonBlockingClient {
             socketChannel.finishConnect();
         }
         return true;
-    }
-
-    //This processes the received from the server.
-    private String processRead(SelectionKey key) throws Exception {
-        SocketChannel socketChannel = (SocketChannel) key.channel();
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
-        socketChannel.read(buffer);
-        buffer.flip();
-        byte[] bytes = new byte[buffer.remaining()];
-        buffer.get(bytes);
-        return new String(bytes);
     }
 }
