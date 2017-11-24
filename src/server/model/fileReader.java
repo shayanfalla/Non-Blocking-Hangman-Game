@@ -17,9 +17,12 @@
 package server.model;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class fileReader {
 
@@ -27,16 +30,24 @@ public class fileReader {
 
     
     //Reads from the file and returns a random word
-    public String readFile() throws IOException {
+    public String readFile() {
         BufferedReader br = null;
         FileReader fr = null;
         ArrayList<String> words = new ArrayList<String>();
 
-        fr = new FileReader(FILEPATH);
+        try {
+            fr = new FileReader(FILEPATH);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(fileReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
         br = new BufferedReader(fr);
         String word;
-        while ((word = br.readLine()) != null) {
-            words.add(word);
+        try {
+            while ((word = br.readLine()) != null) {
+                words.add(word);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(fileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return words.get((int) (Math.random() * words.size()));

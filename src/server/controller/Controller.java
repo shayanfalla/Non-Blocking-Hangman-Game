@@ -27,17 +27,6 @@ import server.model.HangmanHandler;
 
 public class Controller {
 
-    fileReader read = new fileReader();
-
-    public String getWord() {
-        String word = null;
-        try {
-            word = read.readFile();
-        } catch (IOException x) {
-        }
-        return word;
-    }
-
     public void initHangman(SocketChannel socketChannel, Socket socket, HashMap clients) {
         try {
             HangmanHandler handler = new HangmanHandler(socketChannel, socket);

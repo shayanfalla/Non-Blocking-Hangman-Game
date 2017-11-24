@@ -26,7 +26,7 @@ public class HangmanHandler {
 
     private final SocketChannel socketChannel;
     private final Socket socket;
-    private final Controller control;
+    private final fileReader read;
     private String word;
     private int isWordGuessed;
     private int tries;
@@ -38,9 +38,9 @@ public class HangmanHandler {
     public HangmanHandler(SocketChannel socketChannel, Socket socket) {
         this.socketChannel = socketChannel;
         this.socket = socket;
-        this.control = new Controller();
         this.isWordGuessed = 1;
         this.score = 0;
+        this.read = new fileReader();
     }
 
     //This is where the client is handled
@@ -49,7 +49,7 @@ public class HangmanHandler {
     public void run(String input) {
 
         if (isWordGuessed == 1) {
-            word = control.getWord().toLowerCase();
+            word = read.readFile();
 
             guessWord = word.toCharArray();
             totalTries = guessWord.length;
