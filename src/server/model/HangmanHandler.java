@@ -140,7 +140,7 @@ public class HangmanHandler {
         try {
             socketChannel.write(buffer);
         } catch (IOException e) {
-            System.out.println("\nConnection with " + socket + " has been terminated.\n");
+            System.out.println("Connection with " + socket + " has been terminated.\n");
             closeSocket(socket);
         }
     }
@@ -150,7 +150,7 @@ public class HangmanHandler {
         try {
             socketChannel.write(buffer);
         } catch (IOException e) {
-            System.out.println("\nConnection with " + socket + " has been terminated.\n");
+            System.out.println("Connection with " + socket + " has been terminated.\n");
             closeSocket(socket);
         }
     }

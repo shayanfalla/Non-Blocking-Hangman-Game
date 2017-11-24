@@ -16,10 +16,8 @@
  */
 package client.view;
 
-import client.net.sendMessageThread;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
