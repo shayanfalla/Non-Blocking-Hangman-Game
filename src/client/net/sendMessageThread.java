@@ -1,5 +1,3 @@
-package client.net;
-
 /*
  * Copyright (C) 2017 Shayan Fallahian shayanf@kth.se
  *
@@ -16,7 +14,7 @@ package client.net;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+package client.net;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -34,6 +32,7 @@ public class sendMessageThread extends Thread {
         this.msg = msg;
     }
 
+    //Sends the message entered by the client
     @Override
     public void run() {
         ByteBuffer buffer = ByteBuffer.wrap(msg.getBytes());

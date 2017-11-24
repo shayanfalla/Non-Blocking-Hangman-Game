@@ -17,7 +17,13 @@
 package server.controller;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.nio.channels.SocketChannel;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import server.model.fileReader;
+import server.model.HangmanHandler;
 
 public class Controller {
 
@@ -30,6 +36,27 @@ public class Controller {
         } catch (IOException x) {
         }
         return word;
+    }
+
+    public void initHangman(SocketChannel socketChannel, Socket socket, HashMap clients) {
+        try {
+            HangmanHandler handler = new HangmanHandler(socketChannel, socket);
+            handler.run("whatever");
+            clients.put(socketChannel.getRemoteAddress(), handler);
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void contHangman(String msg, HashMap clients, SocketChannel socketChannel) {
+        try {
+            HangmanHandler handler = (HangmanHandler) clients.get(socketChannel.getRemoteAddress());
+            handler.run(msg);
+            clients.put(socketChannel.getRemoteAddress(), handler);
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

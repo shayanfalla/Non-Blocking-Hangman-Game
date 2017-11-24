@@ -14,25 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package client.controller;
 
 import client.net.sendMessageThread;
 import java.nio.channels.SocketChannel;
 
-
-
 public class Controller {
-    
+
     private SocketChannel socketChannel;
-    
-    public Controller(SocketChannel socketChannel){
+
+    public Controller(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
     }
-    
-    public void sendMessage(String msg){
-                sendMessageThread kt = new sendMessageThread(socketChannel, msg);
-                kt.start();
+
+    public void sendMessage(String msg) {
+        sendMessageThread kt = new sendMessageThread(socketChannel, msg);
+        kt.start();
     }
 
 }

@@ -1,10 +1,22 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2017 Shayan Fallahian shayanf@kth.se
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package server.net;
 
+import server.controller.Controller;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -20,11 +32,13 @@ public class ClientHandler {
     private final ServerSocketChannel serverSocketChannel;
     private final Selector selector;
     private final HashMap clients;
+    private final Controller control;
 
     public ClientHandler(ServerSocketChannel serverSocketChannel, Selector selector) {
         this.serverSocketChannel = serverSocketChannel;
         this.selector = selector;
         this.clients = new HashMap();
+        this.control = new Controller();
     }
 
     public void processConnections() {
@@ -68,10 +82,12 @@ public class ClientHandler {
         socketChannel.register(selector, SelectionKey.OP_READ);
         selector.selectedKeys().remove(key);
 
-        HangmanHandler handler = new HangmanHandler(socketChannel, socket);
+        //Initializing the gamesession
+        //and storing it
+        control.initHangman(socketChannel, socket, clients);
+        /*HangmanHandler handler = new HangmanHandler(socketChannel, socket);
         handler.run("whatever");
-        clients.put(socketChannel.getRemoteAddress(), handler);
-        System.out.println(clients.entrySet());
+        clients.put(socketChannel.getRemoteAddress(), handler);*/
 
     }
 
@@ -82,6 +98,7 @@ public class ClientHandler {
         int numBytes = socketChannel.read(buffer);
         Socket socket = socketChannel.socket();
         if (numBytes == -1) { //Closed connection or error --> -1
+            //Remove client game session when connection is terminated
             clients.remove(socketChannel.getRemoteAddress());
             key.cancel();
             System.out.println("\nCcnnection with " + socket + " has been terminated.\n");
@@ -108,12 +125,13 @@ public class ClientHandler {
         buffer.flip();
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
-        try {
+        control.contHangman(new String(bytes), clients, socketChannel);
+       /* try {
             HangmanHandler handler = (HangmanHandler) clients.get(socketChannel.getRemoteAddress());
             handler.run(new String(bytes));
             clients.put(socketChannel.getRemoteAddress(), handler);
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 }

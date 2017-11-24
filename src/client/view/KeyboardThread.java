@@ -37,14 +37,14 @@ public class KeyboardThread extends Thread {
     @Override
     public void run() {
         try {
-            // String msg = kt.word;
             String msg = userInputReader.readLine();
-           /* if (msg.equalsIgnoreCase("-") || msg.equalsIgnoreCase("no")) {
+            if (msg.equalsIgnoreCase("-") || msg.equalsIgnoreCase("no")) {
                 socketChannel.close();
                 System.exit(0);
-            }*/
+            }
             // sends message to server
             control.sendMessage(msg);
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+        }
     }
 }
