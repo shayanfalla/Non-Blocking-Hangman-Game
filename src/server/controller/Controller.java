@@ -22,7 +22,6 @@ import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.model.fileReader;
 import server.model.HangmanHandler;
 
 public class Controller {
